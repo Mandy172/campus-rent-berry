@@ -1,0 +1,1 @@
+DELETE FROM public.rentals WHERE id IN ('42f8c4e3-e36b-4e8a-a04c-882b9310f4e1','ff3d3728-ee16-4aba-b18d-1cd07b97de89')

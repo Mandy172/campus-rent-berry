@@ -66,7 +66,7 @@ function InstallPrompt() {
     const onPrompt = (event: Event) => { event.preventDefault(); setDeferredPrompt(event); setAvailable(true); };
     const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
     window.addEventListener("beforeinstallprompt", onPrompt);
-    if (isIos) window.setTimeout(() => setAvailable(true), 4000);
+    if (isIos) setAvailable(true);
     return () => window.removeEventListener("beforeinstallprompt", onPrompt);
   }, []);
 

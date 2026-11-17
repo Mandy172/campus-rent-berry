@@ -165,6 +165,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      borrowbee_photo_is_visible: { Args: { p_name: string }; Returns: boolean }
       create_rental_request: {
         Args: {
           p_end_date: string

@@ -29,8 +29,9 @@ export const getListing = createServerFn({ method: "GET" })
 async function signListingImages(listing: Listing): Promise<Listing["media"]> {
   const photos = listing.media.filter((asset) => !asset.url.startsWith("/") && asset.url.startsWith(`${listing.owner_id}/`));
   if (!photos.length) return listing.media;
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
   const signed = await Promise.all(photos.map(async (photo) => {
-    const { data, error } = await supabase.storage.from("borrowbee-listings").createSignedUrl(photo.url, 3600);
+    const { data, error } = await supabaseAdmin.storage.from("borrowbee-listings").createSignedUrl(photo.url, 3600);
     if (error) return [photo.url, null] as const;
     return [photo.url, data.signedUrl] as const;
   }));

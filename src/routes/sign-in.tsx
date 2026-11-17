@@ -11,7 +11,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { BRAND, safeReturnPath } from "@/lib/borrowbee";
 
 export const Route = createFileRoute("/sign-in")({
-  validateSearch: (search: Record<string, unknown>) => ({ next: typeof search["next"] === "string" ? safeReturnPath(search["next"]) : undefined }),
+  validateSearch: (search: Record<string, unknown>) => ({ next: typeof search["next"] === "string" ? safeReturnPath(search["next"]) : "/browse" }),
   head: () => ({ meta: [
     { title: "Sign in | BorrowBee" },
     { name: "description", content: "Sign in to BorrowBee to make rental requests and share items with the ADYPU community." },
@@ -25,6 +25,7 @@ export const Route = createFileRoute("/sign-in")({
 
 function SignInPage() {
   const { next } = Route.useSearch();
+  const nextPath = safeReturnPath(next);
   const navigate = useNavigate();
   const { user, ready } = useSupabaseAuth();
   const [mode, setMode] = useState<"sign-in" | "sign-up">("sign-in");
@@ -34,27 +35,27 @@ function SignInPage() {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
 
-  if (ready && user) return <BorrowBeeLayout><section className="mx-auto max-w-xl px-5 py-16 text-center"><span className="mx-auto grid size-14 place-items-center rounded-full bg-brand-gold-soft"><ShieldCheck /></span><h1 className="mt-5 text-3xl font-semibold">You’re signed in.</h1><p className="mt-2 text-muted-foreground">Continue back to where you were.</p><Button className="mt-6" onClick={() => void navigate({ to: next as "/browse" })}>Continue <ArrowRight /></Button></section></BorrowBeeLayout>;
+  if (ready && user) return <BorrowBeeLayout><section className="mx-auto max-w-xl px-5 py-16 text-center"><span className="mx-auto grid size-14 place-items-center rounded-full bg-brand-gold-soft"><ShieldCheck /></span><h1 className="mt-5 text-3xl font-semibold">You’re signed in.</h1><p className="mt-2 text-muted-foreground">Continue back to where you were.</p><Button className="mt-6" onClick={() => void navigate({ to: nextPath as "/browse" })}>Continue <ArrowRight /></Button></section></BorrowBeeLayout>;
 
   async function handlePasswordSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault(); setBusy(true); setMessage("");
     const result = mode === "sign-in"
       ? await supabase.auth.signInWithPassword({ email: email.trim(), password })
-      : await supabase.auth.signUp({ email: email.trim(), password, options: { emailRedirectTo: `${window.location.origin}/sign-in?next=${encodeURIComponent(next)}` } });
+      : await supabase.auth.signUp({ email: email.trim(), password, options: { emailRedirectTo: `${window.location.origin}/sign-in?next=${encodeURIComponent(nextPath)}` } });
     setBusy(false);
     if (result.error) { setMessage(result.error.message); return; }
     if (mode === "sign-up" && !result.data.session) { setMessage("Check your email to confirm your account. Your confirmation link will bring you back here to continue."); return; }
-    sessionStorage.setItem("borrowbee-next", next);
+    sessionStorage.setItem("borrowbee-next", nextPath);
     toast.success(mode === "sign-in" ? "Welcome back." : "Your account is ready.");
-    await navigate({ to: next as "/browse" });
+    await navigate({ to: nextPath as "/browse" });
   }
 
   async function handleSocial(provider: "google" | "lovable") {
-    setBusy(true); setMessage(""); sessionStorage.setItem("borrowbee-next", next);
+    setBusy(true); setMessage(""); sessionStorage.setItem("borrowbee-next", nextPath);
     const { lovable } = await import("@/integrations/lovable/index");
     const result = await lovable.auth.signInWithOAuth(provider, { redirect_uri: window.location.origin });
     if (result.error) { setBusy(false); setMessage(result.error.message); return; }
-    if (!result.redirected) await navigate({ to: next as "/browse" });
+    if (!result.redirected) await navigate({ to: nextPath as "/browse" });
   }
 
   return (

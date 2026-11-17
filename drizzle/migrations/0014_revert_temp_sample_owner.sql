@@ -1,0 +1,1 @@
+UPDATE public.listings SET owner_id = CASE WHEN id IN ('lst_seed_1','lst_seed_2','lst_seed_8') THEN '00000000-0000-4000-8000-000000000001'::uuid ELSE '00000000-0000-4000-8000-000000000002'::uuid END, owner_name = CASE WHEN id IN ('lst_seed_1','lst_seed_2','lst_seed_8') THEN 'Kiran O.' ELSE 'Jay M.' END WHERE id LIKE 'lst_seed_%' AND id = 'lst_seed_1';

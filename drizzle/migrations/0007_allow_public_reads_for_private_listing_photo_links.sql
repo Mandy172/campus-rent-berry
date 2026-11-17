@@ -1,0 +1,1 @@
+CREATE POLICY "Public may create signed links for available listing photos" ON storage.objects FOR SELECT TO anon, authenticated USING (bucket_id = 'borrowbee-listings' AND EXISTS (SELECT 1 FROM public.listings l WHERE l.available = true AND l.owner_id::text = (storage.foldername(name))[1] AND l.media @> jsonb_build_array(jsonb_build_object('url', name))));
