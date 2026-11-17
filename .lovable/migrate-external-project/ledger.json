@@ -1,0 +1,19 @@
+{
+  "source": "v0",
+  "source_artifact": "project.zip",
+  "capabilities": [
+    { "capability": "application code and routes", "source": "v0 Next.js app", "outcome": "migrate", "status": "in_progress", "next_action": "Rebuild the public BorrowBee marketplace pages in TanStack Start." },
+    { "capability": "database schema", "source": "in-memory store; no schema export", "outcome": "migrate", "status": "in_progress", "next_action": "Rental requests and the listings catalog are migrated. Remaining application tables are not implemented." },
+    { "capability": "application records", "source": "no production record export attached; bundled demo listings only", "outcome": "migrate", "status": "pending", "next_action": "Eight bundled items are seeded. Request production data and user export after preview." },
+    { "capability": "authentication identities", "source": "phone OTP and selfie verification", "outcome": "migrate", "status": "pending", "next_action": "Replace custom phone sessions with Lovable Cloud authentication; account migration requires an identity/profile export." },
+    { "capability": "authorization and ownership", "source": "verified-user checks in server actions and in-memory ownership", "outcome": "migrate", "status": "pending", "next_action": "Implement authenticated ownership boundaries and row policies." },
+    { "capability": "uploaded file bytes", "source": "Vercel Blob; no file export attached", "outcome": "preserve", "status": "in_progress", "next_action": "Lovable Cloud Storage upload path is implemented for new listing photos; original file bytes were not attached." },
+    { "capability": "external providers", "source": "Stripe Connect, Twilio SMS, Vercel Blob, Vercel Analytics", "outcome": "preserve", "status": "pending", "next_action": "Preserve Stripe and Twilio workflows; provider credentials and setup are required for live verification. Replace Blob with Lovable Cloud Storage." },
+    { "capability": "public endpoints", "source": "GET /api/files/[id]", "outcome": "migrate", "status": "pending", "next_action": "Rebuild a safe public file-serving endpoint if required by migrated stored media." },
+    { "capability": "callbacks and webhooks", "source": "no callbacks or webhook routes detected", "outcome": "none", "status": "verified", "next_action": "None detected." },
+    { "capability": "schedules", "source": "none detected", "outcome": "none", "status": "verified", "next_action": "None detected." },
+    { "capability": "secrets", "source": "Twilio, Stripe and Vercel Blob environment-variable names; values not present", "outcome": "preserve", "status": "pending", "next_action": "Request credentials securely when provider verification is ready; do not request Vercel platform variables." },
+    { "capability": "cutover", "source": "v0 deployment", "outcome": "pending", "status": "pending", "next_action": "User controls production cutover after preview review." },
+    { "capability": "verification", "source": "not yet tested in Lovable preview", "outcome": "pending", "status": "pending", "next_action": "Verify routes and key marketplace behavior in the preview." }
+  ]
+}

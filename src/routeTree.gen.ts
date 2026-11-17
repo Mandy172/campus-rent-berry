@@ -10,33 +10,115 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BlogRouteImport } from './routes/blog'
+import { Route as BrowseRouteImport } from './routes/browse'
+import { Route as EarningsRouteImport } from './routes/earnings'
+import { Route as PostItemRouteImport } from './routes/post-item'
+import { Route as SignInRouteImport } from './routes/sign-in'
+import { Route as ItemsIdRouteImport } from './routes/items.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BrowseRoute = BrowseRouteImport.update({
+  id: '/browse',
+  path: '/browse',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EarningsRoute = EarningsRouteImport.update({
+  id: '/earnings',
+  path: '/earnings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PostItemRoute = PostItemRouteImport.update({
+  id: '/post-item',
+  path: '/post-item',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignInRoute = SignInRouteImport.update({
+  id: '/sign-in',
+  path: '/sign-in',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ItemsIdRoute = ItemsIdRouteImport.update({
+  id: '/items/$id',
+  path: '/items/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/blog': typeof BlogRoute
+  '/browse': typeof BrowseRoute
+  '/earnings': typeof EarningsRoute
+  '/post-item': typeof PostItemRoute
+  '/sign-in': typeof SignInRoute
+  '/items/$id': typeof ItemsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/blog': typeof BlogRoute
+  '/browse': typeof BrowseRoute
+  '/earnings': typeof EarningsRoute
+  '/post-item': typeof PostItemRoute
+  '/sign-in': typeof SignInRoute
+  '/items/$id': typeof ItemsIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/blog': typeof BlogRoute
+  '/browse': typeof BrowseRoute
+  '/earnings': typeof EarningsRoute
+  '/post-item': typeof PostItemRoute
+  '/sign-in': typeof SignInRoute
+  '/items/$id': typeof ItemsIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/blog'
+    | '/browse'
+    | '/earnings'
+    | '/post-item'
+    | '/sign-in'
+    | '/items/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/blog'
+    | '/browse'
+    | '/earnings'
+    | '/post-item'
+    | '/sign-in'
+    | '/items/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/blog'
+    | '/browse'
+    | '/earnings'
+    | '/post-item'
+    | '/sign-in'
+    | '/items/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BlogRoute: typeof BlogRoute
+  BrowseRoute: typeof BrowseRoute
+  EarningsRoute: typeof EarningsRoute
+  PostItemRoute: typeof PostItemRoute
+  SignInRoute: typeof SignInRoute
+  ItemsIdRoute: typeof ItemsIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +130,59 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/browse': {
+      id: '/browse'
+      path: '/browse'
+      fullPath: '/browse'
+      preLoaderRoute: typeof BrowseRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/earnings': {
+      id: '/earnings'
+      path: '/earnings'
+      fullPath: '/earnings'
+      preLoaderRoute: typeof EarningsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/post-item': {
+      id: '/post-item'
+      path: '/post-item'
+      fullPath: '/post-item'
+      preLoaderRoute: typeof PostItemRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sign-in': {
+      id: '/sign-in'
+      path: '/sign-in'
+      fullPath: '/sign-in'
+      preLoaderRoute: typeof SignInRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/items/$id': {
+      id: '/items/$id'
+      path: '/items/$id'
+      fullPath: '/items/$id'
+      preLoaderRoute: typeof ItemsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BlogRoute: BlogRoute,
+  BrowseRoute: BrowseRoute,
+  EarningsRoute: EarningsRoute,
+  PostItemRoute: PostItemRoute,
+  SignInRoute: SignInRoute,
+  ItemsIdRoute: ItemsIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
