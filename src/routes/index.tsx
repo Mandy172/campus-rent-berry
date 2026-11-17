@@ -65,7 +65,7 @@ function HomePage() {
                 </div>
               </div>
             </Link>
-            <div className="absolute -bottom-4 right-4 flex items-center gap-3 bg-card px-4 py-3 shadow-md sm:-right-4 sm:px-5">
+            <div className="absolute -bottom-6 right-4 flex items-center gap-3 bg-card px-4 py-3 shadow-md sm:-right-4 sm:px-5">
               <span className="grid size-10 place-items-center rounded-full bg-brand-gold-soft"><MapPin size={19} /></span>
               <span><strong className="block text-sm">Around your campus</strong><span className="text-xs text-muted-foreground">ADYPU pickup spots</span></span>
             </div>
