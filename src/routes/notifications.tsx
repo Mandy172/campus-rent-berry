@@ -58,7 +58,7 @@ function NotificationsPage() {
               : data?.length ? <>
                 <p className="flex items-center gap-2 border-b border-border py-4 text-sm text-muted-foreground"><CheckCheck size={17} /> Unread updates are marked as read when you open this page.</p>
                 <ol className="divide-y divide-border border-b border-border">{data.map((notification) => <li key={notification.id}>
-                  <a href={notification.href} className="flex items-start gap-4 py-5 hover:bg-muted/50">
+                  <a href={safeNotificationHref(notification.href)} className="flex items-start gap-4 py-5 hover:bg-muted/50">
                     <span className="grid size-10 shrink-0 place-items-center bg-brand-gold-soft"><Bell size={18} /></span>
                     <span className="min-w-0 flex-1"><strong className="block">{notification.title}</strong><span className="mt-1 block break-words text-sm text-muted-foreground">{notification.body}</span><time className="mt-2 block text-xs text-muted-foreground" dateTime={notification.created_at}>{new Intl.DateTimeFormat("en-IN", { dateStyle: "medium", timeStyle: "short" }).format(new Date(notification.created_at))}</time></span>
                     {!notification.read && <span className="mt-2 size-2 shrink-0 rounded-full bg-primary" aria-label="Unread" />}
@@ -69,4 +69,8 @@ function NotificationsPage() {
       </section>
     </BorrowBeeLayout>
   );
+}
+
+function safeNotificationHref(href: string) {
+  return href.startsWith("/") && !href.startsWith("//") && !href.includes("\\") ? href : "/notifications";
 }

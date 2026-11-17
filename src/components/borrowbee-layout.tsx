@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import { Bell, Bookmark, Heart, LogIn, LogOut, Menu, MessageCircle, PackageCheck, Search, Sparkles } from "lucide-react";
+import { Bell, Bookmark, LogIn, LogOut, Menu, MessageCircle, PackageCheck, Search, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";

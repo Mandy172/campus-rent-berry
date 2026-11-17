@@ -34,8 +34,6 @@ function MessagesPage() {
     queryFn: () => loadConversations(),
     enabled: Boolean(user),
   });
-  const selected = conversations?.find((conversation) => conversation.id === selectedId) ?? null;
-
   return (
     <BorrowBeeLayout>
       <section className="mx-auto max-w-7xl px-5 py-9 md:px-8 md:py-14">
@@ -111,7 +109,7 @@ function ConversationThread({ conversationId, onSent }: { conversationId: string
     <div className="flex min-h-[24rem] w-full max-w-2xl flex-col text-left">
       <div className="flex items-center gap-3 border-b border-border pb-4">
         <Button asChild variant="ghost" size="icon" className="md:hidden" aria-label="Back to conversations">
-          <Link to="/messages"><ArrowRight className="rotate-180" /></Link>
+          <Link to="/messages" search={{ conversation: "" }}><ArrowRight className="rotate-180" /></Link>
         </Button>
         <div><h2 className="font-semibold">{displayName}</h2><p className="text-sm text-muted-foreground">{data.listing?.title ?? "BorrowBee item"}</p></div>
       </div>

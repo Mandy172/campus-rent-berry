@@ -4,3 +4,4 @@
 - Keep marketplace catalog reads public and read-only; enforce any future owner-specific writes through authenticated server functions and row-level database policies.
 - Keep listing photos private in Cloud Storage; issue signed photo links only from server-side application code.
 - Keep database structure and access rules in managed Lovable database migrations so the preview and deployed app share the same schema.
+- Keep favorites, conversations, and notifications behind authenticated server functions, with participant and owner access enforced by database policies or server-validated database actions.
