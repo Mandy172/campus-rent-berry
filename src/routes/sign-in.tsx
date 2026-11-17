@@ -11,7 +11,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { BRAND, safeReturnPath } from "@/lib/borrowbee";
 
 export const Route = createFileRoute("/sign-in")({
-  validateSearch: (search: Record<string, unknown>) => ({ next: typeof search["next"] === "string" ? safeReturnPath(search["next"]) : "/browse" }),
+  validateSearch: (search: Record<string, unknown>) => ({ next: typeof search["next"] === "string" ? safeReturnPath(search["next"]) : undefined }),
   head: () => ({ meta: [
     { title: "Sign in | BorrowBee" },
     { name: "description", content: "Sign in to BorrowBee to make rental requests and share items with the ADYPU community." },

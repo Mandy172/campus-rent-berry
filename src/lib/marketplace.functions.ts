@@ -10,7 +10,7 @@ export const listListings = createServerFn({ method: "GET" })
     const { data: rows, error } = await supabase.from("listings").select("*").eq("available", true).order("created_at", { ascending: false });
     if (error) throw new Error("The marketplace could not be loaded.");
     const listings = (rows ?? []) as Listing[];
-    const withPhotos = await Promise.all(listings.map(async (listing) => ({ ...listing, media: await signListingMedia(listing) })));
+    const withPhotos = await Promise.all(listings.map(async (listing) => ({ ...listing, media: await signListingImages(listing) })));
     if (!data.query?.trim()) return withPhotos;
     const search = data.query.trim().toLocaleLowerCase();
     return withPhotos.filter((listing) => `${listing.title} ${listing.description} ${listing.tags.join(" ")}`.toLocaleLowerCase().includes(search));
@@ -23,20 +23,19 @@ export const getListing = createServerFn({ method: "GET" })
     if (error) throw new Error("This item could not be loaded.");
     if (!listing) return null;
     const row = listing as Listing;
-    const signed = await signListingMedia(row);
-    return { ...row, media: signed };
+    return { ...row, media: await signListingImages(row) };
   });
 
-async function signListingMedia(listing: Listing): Promise<Listing["media"]> {
-  const storagePhotos = listing.media.filter((asset) => !asset.url.startsWith("/") && asset.url.startsWith(`${listing.owner_id}/`));
-  if (storagePhotos.length === 0) return listing.media;
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  const signedUrls = await Promise.all(storagePhotos.map(async (asset) => {
-    const { data } = await supabaseAdmin.storage.from("borrowbee-listings").createSignedUrl(asset.url, 86_400);
-    return [asset.url, data?.signedUrl] as const;
+async function signListingImages(listing: Listing): Promise<Listing["media"]> {
+  const photos = listing.media.filter((asset) => !asset.url.startsWith("/") && asset.url.startsWith(`${listing.owner_id}/`));
+  if (!photos.length) return listing.media;
+  const signed = await Promise.all(photos.map(async (photo) => {
+    const { data, error } = await supabase.storage.from("borrowbee-listings").createSignedUrl(photo.url, 3600);
+    if (error) return [photo.url, null] as const;
+    return [photo.url, data.signedUrl] as const;
   }));
-  const urls = new Map(signedUrls.filter((entry): entry is readonly [string, string] => typeof entry[1] === "string"));
-  return listing.media.map((asset) => ({ ...asset, url: urls.get(asset.url) ?? asset.url }));
+  const signedByPath = new Map(signed.filter((entry): entry is readonly [string, string] => typeof entry[1] === "string"));
+  return listing.media.map((photo) => ({ ...photo, url: signedByPath.get(photo.url) ?? photo.url }));
 }
 
 export const createListing = createServerFn({ method: "POST" })
@@ -51,7 +50,8 @@ export const createListing = createServerFn({ method: "POST" })
     const { data: authData } = await context.supabase.auth.getUser();
     const user = authData.user;
     if (!user) throw new Error("Sign in to list an item.");
-    const ownerName = String(user.user_metadata["full_name"] ?? user.user_metadata["name"] ?? user.email?.split("@")[0] ?? "Campus member").slice(0, 60);
+    const metadata = user.user_metadata as Record<string, unknown>;
+    const ownerName = String(metadata["full_name"] ?? metadata["name"] ?? user.email?.split("@")[0] ?? "Campus member").slice(0, 60);
     const id = `lst_${crypto.randomUUID().replaceAll("-", "").slice(0, 16)}`;
     if (data.media.some((asset) => !asset.url.startsWith(`${context.userId}/`) || asset.url.startsWith("/") || asset.url.includes(".."))) {
       throw new Error("The uploaded photo does not belong to your account.");
@@ -110,7 +110,7 @@ export const listMyListings = createServerFn({ method: "GET" })
   .handler(async ({ context }) => {
     const { data, error } = await context.supabase.from("listings").select("*").eq("owner_id", context.userId).order("created_at", { ascending: false });
     if (error) throw new Error("Your items could not be loaded.");
-    return Promise.all(((data ?? []) as Listing[]).map(async (listing) => ({ ...listing, media: await signListingMedia(listing) })));
+    return Promise.all(((data ?? []) as Listing[]).map(async (listing) => ({ ...listing, media: await signListingImages(listing) })));
   });
 
 export const setListingAvailability = createServerFn({ method: "POST" })
@@ -144,7 +144,8 @@ export const listMyRentals = createServerFn({ method: "GET" })
     const byId = new Map(((listings ?? []) as Listing[]).map((listing) => [listing.id, listing]));
     return Promise.all((rentals ?? []).map(async (rental) => {
       const item = byId.get(rental.listing_id);
-      return { ...rental, side: rental.borrower_id === context.userId ? "borrower" as const : "owner" as const, listing: item ? { ...item, media: await signListingMedia(item) } : null };
+      const withPhoto = item ? { ...item, media: await signListingImages(item) } : null;
+      return { ...rental, side: rental.borrower_id === context.userId ? "borrower" as const : "owner" as const, listing: withPhoto };
     }));
   });
 

@@ -63,7 +63,8 @@ export function categoryName(value: string) {
 
 export function primaryImage(listing: Listing | undefined) {
   if (!listing) return "/items/rolling-cooler.jpg";
-  return listing.media.find((asset) => asset.type === "image")?.url ?? "/items/rolling-cooler.jpg";
+  const stored = listing.media.find((asset) => asset.type === "image")?.url;
+  return stored && (stored.startsWith("/") || stored.startsWith("https://")) ? stored : "/items/rolling-cooler.jpg";
 }
 
 export function filterListings(

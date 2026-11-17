@@ -41,6 +41,7 @@ export function BorrowBeeLayout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </header>
+      <InstallPrompt />
       <main className="min-h-[60dvh] flex-1">{children}</main>
       <footer className="bg-brand-ink text-secondary-foreground">
         <div className="mx-auto grid max-w-7xl gap-9 px-5 py-11 md:grid-cols-[1fr_auto_auto] md:items-start md:px-8">
@@ -52,6 +53,27 @@ export function BorrowBeeLayout({ children }: { children: React.ReactNode }) {
       </footer>
     </div>
   );
+}
+
+function InstallPrompt() {
+  const [available, setAvailable] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<Event | null>(null);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const standalone = window.matchMedia("(display-mode: standalone)").matches || Boolean((navigator as Navigator & { standalone?: boolean }).standalone);
+    if (standalone || sessionStorage.getItem("borrowbee-install-dismissed")) return;
+    const onPrompt = (event: Event) => { event.preventDefault(); setDeferredPrompt(event); setAvailable(true); };
+    const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    window.addEventListener("beforeinstallprompt", onPrompt);
+    if (isIos) window.setTimeout(() => setAvailable(true), 4000);
+    return () => window.removeEventListener("beforeinstallprompt", onPrompt);
+  }, []);
+
+  if (!available) return null;
+  const dismiss = () => { sessionStorage.setItem("borrowbee-install-dismissed", "1"); setAvailable(false); };
+
+  return <aside role="dialog" aria-label={`Install ${BRAND.name}`} className="fixed inset-x-3 bottom-3 z-50 mx-auto flex max-w-md items-center gap-3 border border-border bg-card p-3 shadow-lg"><img src="/icon-192.png" alt="" className="size-11 shrink-0"/><p className="min-w-0 flex-1 text-sm">{deferredPrompt ? <><strong className="block">Install {BRAND.name}</strong><span className="text-xs text-muted-foreground">Add it to your home screen for quick access.</span></> : <><strong className="block">Add {BRAND.name} to your home screen</strong><span className="text-xs text-muted-foreground">Tap Share, then “Add to Home Screen”.</span></>}</p>{deferredPrompt && <Button size="sm" onClick={async () => { const prompt = deferredPrompt as Event & { prompt?: () => Promise<void>; userChoice?: Promise<unknown> }; await prompt.prompt?.(); await prompt.userChoice; dismiss(); }}>Install</Button>}<Button variant="ghost" size="icon" aria-label="Dismiss install prompt" onClick={dismiss}>×</Button></aside>;
 }
 
 function NavLink({ to, children, icon }: { to: string; children: React.ReactNode; icon?: React.ReactNode }) {

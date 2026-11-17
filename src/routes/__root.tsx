@@ -102,6 +102,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap",
       },
       { rel: "manifest", href: "/manifest.webmanifest" },
+      { rel: "apple-touch-icon", href: "/icon-192.png" },
       { rel: "icon", href: "/favicon.png", type: "image/png" },
       { rel: "apple-touch-icon", href: "/icon-192.png" },
     ],
@@ -130,13 +131,7 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   useEffect(() => {
     if (typeof window === "undefined" || !("serviceWorker" in navigator)) return;
-    if (import.meta.env.DEV || window.self !== window.top) {
-      void navigator.serviceWorker.getRegistrations().then((registrations) =>
-        Promise.all(registrations.filter((registration) => new URL(registration.scope).origin === window.location.origin).map((registration) => registration.unregister())),
-      );
-      return;
-    }
-    void navigator.serviceWorker.register("/sw.js").catch(() => undefined);
+    void import("@/lib/register-service-worker").then(({ registerBorrowBeeWorker }) => registerBorrowBeeWorker());
   }, []);
 
   return (
