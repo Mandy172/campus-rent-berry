@@ -56,19 +56,22 @@ function HomePage() {
             </div>
           </div>
           <div className="relative min-w-0">
-            <Link to="/browse" aria-label="Browse campus rentals" className="group relative block overflow-hidden rounded-sm bg-card">
-              <img className="aspect-[1.08/1] w-full object-cover transition-transform duration-700 group-hover:scale-[1.025]" src={primaryImage(featured[0] ?? listings[0])} alt={featured[0]?.title ?? "Campus rental item"} />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-foreground/75 to-transparent px-5 pb-5 pt-16 text-primary-foreground sm:px-7 sm:pb-7">
-                <div className="flex items-end justify-between gap-4">
-                  <div><p className="text-sm text-primary-foreground/80">A little less stuff to buy</p><p className="mt-1 max-w-sm text-xl font-semibold sm:text-2xl">More things to do with what you have.</p></div>
-                  <span className="grid size-11 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground"><ArrowUpRight /></span>
+            <Link to="/browse" aria-label="Browse campus rentals" className="group block">
+              <div className="overflow-hidden rounded-sm bg-card">
+                <img className="aspect-[1.08/1] w-full object-cover transition-transform duration-700 group-hover:scale-[1.025]" src={primaryImage(featured[0] ?? listings[0])} alt={featured[0]?.title ?? "Campus rental item"} />
+              </div>
+              <div className="mt-4 flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="min-w-0">
+                  <p className="text-sm text-muted-foreground">A little less stuff to buy</p>
+                  <p className="mt-1 max-w-sm text-xl font-semibold sm:text-2xl">More things to do with what you have.</p>
+                </div>
+                <div className="flex max-w-full shrink-0 items-center gap-3 border border-border bg-card px-4 py-3 shadow-sm sm:px-5">
+                  <span className="grid size-10 place-items-center rounded-full bg-brand-gold-soft"><MapPin size={19} /></span>
+                  <span><strong className="block text-sm">Around your campus</strong><span className="text-xs text-muted-foreground">ADYPU pickup spots</span></span>
+                  <span className="grid size-10 place-items-center rounded-full bg-primary text-primary-foreground"><ArrowUpRight /></span>
                 </div>
               </div>
             </Link>
-            <div className="absolute -bottom-6 right-4 flex items-center gap-3 bg-card px-4 py-3 shadow-md sm:-right-4 sm:px-5">
-              <span className="grid size-10 place-items-center rounded-full bg-brand-gold-soft"><MapPin size={19} /></span>
-              <span><strong className="block text-sm">Around your campus</strong><span className="text-xs text-muted-foreground">ADYPU pickup spots</span></span>
-            </div>
           </div>
         </div>
         <div className="mx-auto max-w-7xl px-5 pb-8 md:px-8"><a href="#available" className="inline-flex items-center gap-2 text-xs font-semibold uppercase text-muted-foreground">See what’s available <ArrowDown size={14} /></a></div>
