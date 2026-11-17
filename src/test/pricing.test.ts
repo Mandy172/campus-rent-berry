@@ -25,4 +25,9 @@ describe("BorrowBee pricing", () => {
     } as Listing;
     expect(rentalQuote(listing, 2, 1)).toEqual({ subtotal: 1800, fee: 225, ownerPayout: 1575, deposit: 1500 });
   });
+
+  it("keeps the 12.5% platform fee concrete for a ₹900 two-day booking", () => {
+    const listing = { daily_rate: 900, hourly_rate: null, flat_rate: null, deposit: 0 } as Listing;
+    expect(rentalQuote(listing, 2, 1).fee).toBe(225);
+  });
 });

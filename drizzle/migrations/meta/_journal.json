@@ -36,6 +36,13 @@
       "when": 1794936665724,
       "tag": "0004_tighten_borrowbee_storage_and_rentals",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1794937518303,
+      "tag": "0005_finish_borrowbee_rental_completion",
+      "breakpoints": true
     }
   ]
 }

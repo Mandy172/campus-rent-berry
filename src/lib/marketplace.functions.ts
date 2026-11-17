@@ -151,7 +151,7 @@ export const listMyRentals = createServerFn({ method: "GET" })
 
 export const respondToRental = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
-  .inputValidator((input: { id: string; action: "cancel" | "accept" | "decline" }) => input)
+  .inputValidator((input: { id: string; action: "cancel" | "accept" | "decline" | "complete" }) => input)
   .handler(async ({ data, context }) => {
     const { error } = await context.supabase.rpc("respond_to_rental", { p_rental_id: data.id, p_action: data.action });
     if (error) throw new Error(error.message);
