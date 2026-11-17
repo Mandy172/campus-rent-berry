@@ -29,6 +29,13 @@
       "when": 1794935756596,
       "tag": "0003_create_borrowbee_payout_accounts",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1794936665724,
+      "tag": "0004_tighten_borrowbee_storage_and_rentals",
+      "breakpoints": true
     }
   ]
 }
