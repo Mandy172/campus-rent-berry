@@ -80,6 +80,27 @@ export type Database = {
         }
         Relationships: []
       }
+      payout_accounts: {
+        Row: {
+          connected: boolean
+          owner_id: string
+          stripe_account_id: string
+          updated_at: string
+        }
+        Insert: {
+          connected?: boolean
+          owner_id: string
+          stripe_account_id: string
+          updated_at?: string
+        }
+        Update: {
+          connected?: boolean
+          owner_id?: string
+          stripe_account_id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       rentals: {
         Row: {
           borrower_id: string
@@ -144,7 +165,20 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      create_rental_request: {
+        Args: {
+          p_end_date: string
+          p_listing_id: string
+          p_note: string
+          p_quantity: number
+          p_start_date: string
+        }
+        Returns: string
+      }
+      respond_to_rental: {
+        Args: { p_action: string; p_rental_id: string }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never

@@ -13,6 +13,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as BrowseRouteImport } from './routes/browse'
 import { Route as EarningsRouteImport } from './routes/earnings'
+import { Route as MyListingsRouteImport } from './routes/my-listings'
+import { Route as MyRentalsRouteImport } from './routes/my-rentals'
 import { Route as PostItemRouteImport } from './routes/post-item'
 import { Route as SignInRouteImport } from './routes/sign-in'
 import { Route as ItemsIdRouteImport } from './routes/items.$id'
@@ -37,6 +39,16 @@ const EarningsRoute = EarningsRouteImport.update({
   path: '/earnings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MyListingsRoute = MyListingsRouteImport.update({
+  id: '/my-listings',
+  path: '/my-listings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyRentalsRoute = MyRentalsRouteImport.update({
+  id: '/my-rentals',
+  path: '/my-rentals',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PostItemRoute = PostItemRouteImport.update({
   id: '/post-item',
   path: '/post-item',
@@ -58,6 +70,8 @@ export interface FileRoutesByFullPath {
   '/blog': typeof BlogRoute
   '/browse': typeof BrowseRoute
   '/earnings': typeof EarningsRoute
+  '/my-listings': typeof MyListingsRoute
+  '/my-rentals': typeof MyRentalsRoute
   '/post-item': typeof PostItemRoute
   '/sign-in': typeof SignInRoute
   '/items/$id': typeof ItemsIdRoute
@@ -67,6 +81,8 @@ export interface FileRoutesByTo {
   '/blog': typeof BlogRoute
   '/browse': typeof BrowseRoute
   '/earnings': typeof EarningsRoute
+  '/my-listings': typeof MyListingsRoute
+  '/my-rentals': typeof MyRentalsRoute
   '/post-item': typeof PostItemRoute
   '/sign-in': typeof SignInRoute
   '/items/$id': typeof ItemsIdRoute
@@ -77,6 +93,8 @@ export interface FileRoutesById {
   '/blog': typeof BlogRoute
   '/browse': typeof BrowseRoute
   '/earnings': typeof EarningsRoute
+  '/my-listings': typeof MyListingsRoute
+  '/my-rentals': typeof MyRentalsRoute
   '/post-item': typeof PostItemRoute
   '/sign-in': typeof SignInRoute
   '/items/$id': typeof ItemsIdRoute
@@ -88,6 +106,8 @@ export interface FileRouteTypes {
     | '/blog'
     | '/browse'
     | '/earnings'
+    | '/my-listings'
+    | '/my-rentals'
     | '/post-item'
     | '/sign-in'
     | '/items/$id'
@@ -97,6 +117,8 @@ export interface FileRouteTypes {
     | '/blog'
     | '/browse'
     | '/earnings'
+    | '/my-listings'
+    | '/my-rentals'
     | '/post-item'
     | '/sign-in'
     | '/items/$id'
@@ -106,6 +128,8 @@ export interface FileRouteTypes {
     | '/blog'
     | '/browse'
     | '/earnings'
+    | '/my-listings'
+    | '/my-rentals'
     | '/post-item'
     | '/sign-in'
     | '/items/$id'
@@ -116,6 +140,8 @@ export interface RootRouteChildren {
   BlogRoute: typeof BlogRoute
   BrowseRoute: typeof BrowseRoute
   EarningsRoute: typeof EarningsRoute
+  MyListingsRoute: typeof MyListingsRoute
+  MyRentalsRoute: typeof MyRentalsRoute
   PostItemRoute: typeof PostItemRoute
   SignInRoute: typeof SignInRoute
   ItemsIdRoute: typeof ItemsIdRoute
@@ -151,6 +177,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EarningsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/my-listings': {
+      id: '/my-listings'
+      path: '/my-listings'
+      fullPath: '/my-listings'
+      preLoaderRoute: typeof MyListingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-rentals': {
+      id: '/my-rentals'
+      path: '/my-rentals'
+      fullPath: '/my-rentals'
+      preLoaderRoute: typeof MyRentalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/post-item': {
       id: '/post-item'
       path: '/post-item'
@@ -180,6 +220,8 @@ const rootRouteChildren: RootRouteChildren = {
   BlogRoute: BlogRoute,
   BrowseRoute: BrowseRoute,
   EarningsRoute: EarningsRoute,
+  MyListingsRoute: MyListingsRoute,
+  MyRentalsRoute: MyRentalsRoute,
   PostItemRoute: PostItemRoute,
   SignInRoute: SignInRoute,
   ItemsIdRoute: ItemsIdRoute,

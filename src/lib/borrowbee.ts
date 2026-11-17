@@ -61,7 +61,8 @@ export function categoryName(value: string) {
   return categories.find((category) => category.value === value)?.label ?? "Other";
 }
 
-export function primaryImage(listing: Listing) {
+export function primaryImage(listing: Listing | undefined) {
+  if (!listing) return "/items/rolling-cooler.jpg";
   return listing.media.find((asset) => asset.type === "image")?.url ?? "/items/rolling-cooler.jpg";
 }
 

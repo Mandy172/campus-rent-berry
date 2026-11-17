@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, AtSign, Eye, EyeOff, LockKeyhole, MailCheck, ShieldCheck, Sparkles, UserPlus } from "lucide-react";
+import { ArrowLeft, ArrowRight, AtSign, Eye, EyeOff, MailCheck, ShieldCheck, Sparkles, UserPlus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { BRAND, safeReturnPath } from "@/lib/borrowbee";
 
 export const Route = createFileRoute("/sign-in")({
-  validateSearch: (search: Record<string, unknown>) => ({ next: typeof search.next === "string" ? safeReturnPath(search.next) : "/browse" }),
+  validateSearch: (search: Record<string, unknown>) => ({ next: typeof search["next"] === "string" ? safeReturnPath(search["next"]) : "/browse" }),
   head: () => ({ meta: [
     { title: "Sign in | BorrowBee" },
     { name: "description", content: "Sign in to BorrowBee to make rental requests and share items with the ADYPU community." },
@@ -40,10 +40,10 @@ function SignInPage() {
     event.preventDefault(); setBusy(true); setMessage("");
     const result = mode === "sign-in"
       ? await supabase.auth.signInWithPassword({ email: email.trim(), password })
-      : await supabase.auth.signUp({ email: email.trim(), password, options: { emailRedirectTo: window.location.origin } });
+      : await supabase.auth.signUp({ email: email.trim(), password, options: { emailRedirectTo: `${window.location.origin}/sign-in?next=${encodeURIComponent(next)}` } });
     setBusy(false);
     if (result.error) { setMessage(result.error.message); return; }
-    if (mode === "sign-up" && !result.data.session) { setMessage("Check your email to confirm your account, then come back to sign in."); return; }
+    if (mode === "sign-up" && !result.data.session) { setMessage("Check your email to confirm your account. Your confirmation link will bring you back here to continue."); return; }
     sessionStorage.setItem("borrowbee-next", next);
     toast.success(mode === "sign-in" ? "Welcome back." : "Your account is ready.");
     await navigate({ to: next as "/browse" });

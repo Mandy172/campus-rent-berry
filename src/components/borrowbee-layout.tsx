@@ -33,10 +33,10 @@ export function BorrowBeeLayout({ children }: { children: React.ReactNode }) {
           <div className="flex items-center gap-2">
             {user ? (
               <>
-                <span className="hidden max-w-36 truncate text-sm text-muted-foreground lg:block">{user.user_metadata?.full_name ?? user.email}</span>
+                <span className="hidden max-w-36 truncate text-sm text-muted-foreground lg:block">{user.user_metadata?.["full_name"] ?? user.email}</span>
                 <Button variant="outline" size="sm" onClick={async () => { await supabase.auth.signOut(); }}><LogOut className="md:hidden" /><span className="hidden md:inline">Sign out</span></Button>
               </>
-            ) : <Button asChild size="sm"><Link to="/sign-in"><LogIn /> <span>Sign in</span></Link></Button>}
+            ) : <Button asChild size="sm"><Link to="/sign-in" search={{ next: "/browse" }}><LogIn /> <span>Sign in</span></Link></Button>}
             <Button variant="ghost" size="icon" className="md:hidden" aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)}><Menu /></Button>
           </div>
         </div>
@@ -54,8 +54,9 @@ export function BorrowBeeLayout({ children }: { children: React.ReactNode }) {
   );
 }
 
-function NavLink({ to, children, icon }: { to: "/browse" | "/earnings" | "/blog" | "/my-rentals" | "/my-listings"; children: React.ReactNode; icon?: React.ReactNode }) {
-  return <Link to={to} activeProps={{ className: "bg-accent text-foreground" }} className="inline-flex min-h-10 items-center gap-2 rounded-md px-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground">{icon}{children}</Link>;
+function NavLink({ to, children, icon }: { to: string; children: React.ReactNode; icon?: React.ReactNode }) {
+  const location = useLocation();
+  return <Link to={to as "/browse"} activeProps={{ className: "bg-accent text-foreground" }} className={`inline-flex min-h-10 items-center gap-2 rounded-md px-3 text-sm font-medium transition-colors hover:bg-accent hover:text-foreground ${location.pathname === to ? "bg-accent text-foreground" : "text-muted-foreground"}`}>{icon}{children}</Link>;
 }
 
 export function ItemCard({ listing }: { listing: Listing }) {

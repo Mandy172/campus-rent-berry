@@ -15,6 +15,20 @@
       "when": 1794934814676,
       "tag": "0001_create_borrowbee_rental_requests",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794935290601,
+      "tag": "0002_secure_borrowbee_rental_workflows",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1794935756596,
+      "tag": "0003_create_borrowbee_payout_accounts",
+      "breakpoints": true
     }
   ]
 }

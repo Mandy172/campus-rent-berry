@@ -103,6 +103,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { rel: "manifest", href: "/manifest.webmanifest" },
       { rel: "icon", href: "/favicon.png", type: "image/png" },
+      { rel: "apple-touch-icon", href: "/icon-192.png" },
     ],
   }),
   shellComponent: RootShell,
@@ -127,6 +128,16 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  useEffect(() => {
+    if (typeof window === "undefined" || !("serviceWorker" in navigator)) return;
+    if (import.meta.env.DEV || window.self !== window.top) {
+      void navigator.serviceWorker.getRegistrations().then((registrations) =>
+        Promise.all(registrations.filter((registration) => new URL(registration.scope).origin === window.location.origin).map((registration) => registration.unregister())),
+      );
+      return;
+    }
+    void navigator.serviceWorker.register("/sw.js").catch(() => undefined);
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
