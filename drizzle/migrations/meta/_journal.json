@@ -113,6 +113,20 @@
       "when": 1794939735600,
       "tag": "0015_remove_test_rental_requests",
       "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1794940410246,
+      "tag": "0016_add_saved_messages_notifications",
+      "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1794940473275,
+      "tag": "0017_add_saved_listing_and_conversation_actions",
+      "breakpoints": true
     }
   ]
 }

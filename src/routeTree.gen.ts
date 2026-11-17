@@ -13,9 +13,12 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as BrowseRouteImport } from './routes/browse'
 import { Route as EarningsRouteImport } from './routes/earnings'
+import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as MyListingsRouteImport } from './routes/my-listings'
 import { Route as MyRentalsRouteImport } from './routes/my-rentals'
+import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as PostItemRouteImport } from './routes/post-item'
+import { Route as SavedRouteImport } from './routes/saved'
 import { Route as SignInRouteImport } from './routes/sign-in'
 import { Route as ItemsIdRouteImport } from './routes/items.$id'
 
@@ -39,6 +42,11 @@ const EarningsRoute = EarningsRouteImport.update({
   path: '/earnings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MessagesRoute = MessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MyListingsRoute = MyListingsRouteImport.update({
   id: '/my-listings',
   path: '/my-listings',
@@ -49,9 +57,19 @@ const MyRentalsRoute = MyRentalsRouteImport.update({
   path: '/my-rentals',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NotificationsRoute = NotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PostItemRoute = PostItemRouteImport.update({
   id: '/post-item',
   path: '/post-item',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SavedRoute = SavedRouteImport.update({
+  id: '/saved',
+  path: '/saved',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SignInRoute = SignInRouteImport.update({
@@ -70,9 +88,12 @@ export interface FileRoutesByFullPath {
   '/blog': typeof BlogRoute
   '/browse': typeof BrowseRoute
   '/earnings': typeof EarningsRoute
+  '/messages': typeof MessagesRoute
   '/my-listings': typeof MyListingsRoute
   '/my-rentals': typeof MyRentalsRoute
+  '/notifications': typeof NotificationsRoute
   '/post-item': typeof PostItemRoute
+  '/saved': typeof SavedRoute
   '/sign-in': typeof SignInRoute
   '/items/$id': typeof ItemsIdRoute
 }
@@ -81,9 +102,12 @@ export interface FileRoutesByTo {
   '/blog': typeof BlogRoute
   '/browse': typeof BrowseRoute
   '/earnings': typeof EarningsRoute
+  '/messages': typeof MessagesRoute
   '/my-listings': typeof MyListingsRoute
   '/my-rentals': typeof MyRentalsRoute
+  '/notifications': typeof NotificationsRoute
   '/post-item': typeof PostItemRoute
+  '/saved': typeof SavedRoute
   '/sign-in': typeof SignInRoute
   '/items/$id': typeof ItemsIdRoute
 }
@@ -93,9 +117,12 @@ export interface FileRoutesById {
   '/blog': typeof BlogRoute
   '/browse': typeof BrowseRoute
   '/earnings': typeof EarningsRoute
+  '/messages': typeof MessagesRoute
   '/my-listings': typeof MyListingsRoute
   '/my-rentals': typeof MyRentalsRoute
+  '/notifications': typeof NotificationsRoute
   '/post-item': typeof PostItemRoute
+  '/saved': typeof SavedRoute
   '/sign-in': typeof SignInRoute
   '/items/$id': typeof ItemsIdRoute
 }
@@ -106,9 +133,12 @@ export interface FileRouteTypes {
     | '/blog'
     | '/browse'
     | '/earnings'
+    | '/messages'
     | '/my-listings'
     | '/my-rentals'
+    | '/notifications'
     | '/post-item'
+    | '/saved'
     | '/sign-in'
     | '/items/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -117,9 +147,12 @@ export interface FileRouteTypes {
     | '/blog'
     | '/browse'
     | '/earnings'
+    | '/messages'
     | '/my-listings'
     | '/my-rentals'
+    | '/notifications'
     | '/post-item'
+    | '/saved'
     | '/sign-in'
     | '/items/$id'
   id:
@@ -128,9 +161,12 @@ export interface FileRouteTypes {
     | '/blog'
     | '/browse'
     | '/earnings'
+    | '/messages'
     | '/my-listings'
     | '/my-rentals'
+    | '/notifications'
     | '/post-item'
+    | '/saved'
     | '/sign-in'
     | '/items/$id'
   fileRoutesById: FileRoutesById
@@ -140,9 +176,12 @@ export interface RootRouteChildren {
   BlogRoute: typeof BlogRoute
   BrowseRoute: typeof BrowseRoute
   EarningsRoute: typeof EarningsRoute
+  MessagesRoute: typeof MessagesRoute
   MyListingsRoute: typeof MyListingsRoute
   MyRentalsRoute: typeof MyRentalsRoute
+  NotificationsRoute: typeof NotificationsRoute
   PostItemRoute: typeof PostItemRoute
+  SavedRoute: typeof SavedRoute
   SignInRoute: typeof SignInRoute
   ItemsIdRoute: typeof ItemsIdRoute
 }
@@ -177,6 +216,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EarningsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/messages': {
+      id: '/messages'
+      path: '/messages'
+      fullPath: '/messages'
+      preLoaderRoute: typeof MessagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/my-listings': {
       id: '/my-listings'
       path: '/my-listings'
@@ -191,11 +237,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MyRentalsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/notifications': {
+      id: '/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof NotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/post-item': {
       id: '/post-item'
       path: '/post-item'
       fullPath: '/post-item'
       preLoaderRoute: typeof PostItemRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/saved': {
+      id: '/saved'
+      path: '/saved'
+      fullPath: '/saved'
+      preLoaderRoute: typeof SavedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sign-in': {
@@ -220,9 +280,12 @@ const rootRouteChildren: RootRouteChildren = {
   BlogRoute: BlogRoute,
   BrowseRoute: BrowseRoute,
   EarningsRoute: EarningsRoute,
+  MessagesRoute: MessagesRoute,
   MyListingsRoute: MyListingsRoute,
   MyRentalsRoute: MyRentalsRoute,
+  NotificationsRoute: NotificationsRoute,
   PostItemRoute: PostItemRoute,
+  SavedRoute: SavedRoute,
   SignInRoute: SignInRoute,
   ItemsIdRoute: ItemsIdRoute,
 }

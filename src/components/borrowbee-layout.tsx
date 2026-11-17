@@ -1,5 +1,6 @@
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
-import { Heart, Instagram, LogIn, LogOut, Menu, PackageCheck, Search, ShieldCheck, Sparkles, UserRoundPlus } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
+import { Bell, Bookmark, Heart, LogIn, LogOut, Menu, MessageCircle, PackageCheck, Search, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -7,13 +8,27 @@ import { supabase } from "@/integrations/supabase/client";
 import { useSupabaseAuth } from "@/hooks/use-supabase-auth";
 import { BRAND, categoryName, formatMoney, priceLabel, primaryImage } from "@/lib/borrowbee";
 import type { Listing } from "@/lib/borrowbee";
+import { SavedListingButton } from "@/components/saved-listing-button";
 
 export function BorrowBeeLayout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { user } = useSupabaseAuth();
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => setMenuOpen(false), [location.pathname]);
+
+  async function handleSignOut() {
+    await queryClient.cancelQueries();
+    queryClient.clear();
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      toast.error("Could not sign out. Try again.");
+      return;
+    }
+    await navigate({ to: "/sign-in", search: { next: "/browse" }, replace: true });
+  }
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -27,14 +42,18 @@ export function BorrowBeeLayout({ children }: { children: React.ReactNode }) {
             <NavLink to="/browse" icon={<Search size={17} />}>Browse</NavLink>
             <NavLink to="/earnings" icon={<Sparkles size={17} />}>Earnings</NavLink>
             <NavLink to="/blog">Journal</NavLink>
+            {user && <NavLink to="/saved" icon={<Bookmark size={17} />}>Saved</NavLink>}
+            {user && <NavLink to="/messages" icon={<MessageCircle size={17} />}>Messages</NavLink>}
+            {user && <NavLink to="/notifications" icon={<Bell size={17} />}>Alerts</NavLink>}
+            {user && <NavLink to="/post-item" icon={<Sparkles size={17} />}>List an item</NavLink>}
             {user && <NavLink to="/my-rentals" icon={<PackageCheck size={17} />}>My rentals</NavLink>}
-            {user && <NavLink to="/my-listings" icon={<Heart size={17} />}>My items</NavLink>}
+            {user && <NavLink to="/my-listings" icon={<PackageCheck size={17} />}>My items</NavLink>}
           </nav>
           <div className="flex items-center gap-2">
             {user ? (
               <>
                 <span className="hidden max-w-36 truncate text-sm text-muted-foreground lg:block">{user.user_metadata?.["full_name"] ?? user.email}</span>
-                <Button variant="outline" size="sm" onClick={async () => { await supabase.auth.signOut(); }}><LogOut className="md:hidden" /><span className="hidden md:inline">Sign out</span></Button>
+                <Button variant="outline" size="sm" onClick={() => void handleSignOut()}><LogOut className="md:hidden" /><span className="hidden md:inline">Sign out</span></Button>
               </>
             ) : <Button asChild size="sm"><Link to="/sign-in" search={{ next: "/browse" }}><LogIn /> <span>Sign in</span></Link></Button>}
             <Button variant="ghost" size="icon" className="md:hidden" aria-label={menuOpen ? "Close navigation" : "Open navigation"} aria-expanded={menuOpen} onClick={() => setMenuOpen((open) => !open)}><Menu /></Button>
@@ -83,17 +102,20 @@ function NavLink({ to, children, icon }: { to: string; children: React.ReactNode
 
 export function ItemCard({ listing }: { listing: Listing }) {
   return (
-    <Link to="/items/$id" params={{ id: listing.id }} className="group block overflow-hidden border border-border bg-card transition-colors hover:border-ring">
-      <div className="relative aspect-[1.12/1] overflow-hidden bg-muted">
-        <img src={primaryImage(listing)} alt={listing.title} loading="lazy" className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
-        <span className="absolute left-3 top-3 bg-background/90 px-2.5 py-1 text-xs font-semibold">{categoryName(listing.category)}</span>
-      </div>
-      <div className="space-y-2 p-4">
-        <h3 className="line-clamp-2 min-h-12 text-lg font-semibold leading-6">{listing.title}</h3>
-        <p className="text-base font-semibold text-brand-terracotta">{priceLabel(listing)}</p>
-        <p className="flex items-center justify-between gap-2 border-t border-border pt-3 text-xs text-muted-foreground"><span className="truncate">{listing.owner_name}</span><span className="flex shrink-0 items-center gap-1"><span className="size-1.5 rounded-full bg-brand-green" />{listing.location}</span></p>
-      </div>
-    </Link>
+    <article className="group relative overflow-hidden border border-border bg-card transition-colors hover:border-ring">
+      <Link to="/items/$id" params={{ id: listing.id }} className="block">
+        <div className="relative aspect-[1.12/1] overflow-hidden bg-muted">
+          <img src={primaryImage(listing)} alt={listing.title} loading="lazy" className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
+          <span className="absolute left-3 top-3 bg-background/90 px-2.5 py-1 text-xs font-semibold">{categoryName(listing.category)}</span>
+        </div>
+        <div className="space-y-2 p-4">
+          <h3 className="line-clamp-2 min-h-12 text-lg font-semibold leading-6">{listing.title}</h3>
+          <p className="text-base font-semibold text-brand-terracotta">{priceLabel(listing)}</p>
+          <p className="flex items-center justify-between gap-2 border-t border-border pt-3 text-xs text-muted-foreground"><span className="truncate">{listing.owner_name}</span><span className="flex shrink-0 items-center gap-1"><span className="size-1.5 rounded-full bg-brand-green" />{listing.location}</span></p>
+        </div>
+      </Link>
+      <div className="absolute right-3 top-3"><SavedListingButton listingId={listing.id} /></div>
+    </article>
   );
 }
 
