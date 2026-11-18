@@ -13,10 +13,10 @@ import { connectStripeAccount, deleteListing, getStripeStatus, listMyListings, r
 
 export const Route = createFileRoute("/my-listings")({
   head: () => ({ meta: [
-    { title: "My items | BorrowBee" },
+    { title: "My items | RentBerry" },
     { name: "description", content: "Manage the items you’ve shared with the ADYPU community." },
-    { property: "og:title", content: "My items | BorrowBee" },
-    { property: "og:description", content: "Manage your BorrowBee marketplace listings." },
+    { property: "og:title", content: "My items | RentBerry" },
+    { property: "og:description", content: "Manage your RentBerry marketplace listings." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },
   ] }),

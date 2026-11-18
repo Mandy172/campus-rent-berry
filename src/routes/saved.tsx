@@ -9,10 +9,10 @@ import { listSavedListings } from "@/lib/community.functions";
 
 export const Route = createFileRoute("/saved")({
   head: () => ({ meta: [
-    { title: "Saved items | BorrowBee" },
-    { name: "description", content: "Your privately saved BorrowBee campus listings." },
-    { property: "og:title", content: "Saved items | BorrowBee" },
-    { property: "og:description", content: "Return to items you saved on BorrowBee." },
+    { title: "Saved items | RentBerry" },
+    { name: "description", content: "Your privately saved RentBerry campus listings." },
+    { property: "og:title", content: "Saved items | RentBerry" },
+    { property: "og:description", content: "Return to items you saved on RentBerry." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },
   ] }),

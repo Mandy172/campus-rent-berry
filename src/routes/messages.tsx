@@ -15,10 +15,10 @@ export const Route = createFileRoute("/messages")({
     conversation: typeof search["conversation"] === "string" && /^[0-9a-f-]{36}$/i.test(search["conversation"]) ? search["conversation"] : "",
   }),
   head: () => ({ meta: [
-    { title: "Messages | BorrowBee" },
-    { name: "description", content: "Private conversations with BorrowBee campus members." },
-    { property: "og:title", content: "Messages | BorrowBee" },
-    { property: "og:description", content: "Message the people sharing items on BorrowBee." },
+    { title: "Messages | RentBerry" },
+    { name: "description", content: "Private conversations with RentBerry campus members." },
+    { property: "og:title", content: "Messages | RentBerry" },
+    { property: "og:description", content: "Message the people sharing items on RentBerry." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },
   ] }),
@@ -56,7 +56,7 @@ function MessagesPage() {
                         search={{ conversation: conversation.id }}
                         className={`block px-4 py-4 text-sm transition-colors hover:bg-muted ${selectedId === conversation.id ? "bg-muted" : ""}`}
                       >
-                        <span className="block font-medium">{conversation.listing?.title ?? "BorrowBee item"}</span>
+                        <span className="block font-medium">{conversation.listing?.title ?? "RentBerry item"}</span>
                         <span className="mt-1 block truncate text-muted-foreground">{conversation.latestMessage?.body ?? "No messages yet"}</span>
                       </Link>
                     </li>
@@ -111,7 +111,7 @@ function ConversationThread({ conversationId, onSent }: { conversationId: string
         <Button asChild variant="ghost" size="icon" className="md:hidden" aria-label="Back to conversations">
           <Link to="/messages" search={{ conversation: "" }}><ArrowRight className="rotate-180" /></Link>
         </Button>
-        <div><h2 className="font-semibold">{displayName}</h2><p className="text-sm text-muted-foreground">{data.listing?.title ?? "BorrowBee item"}</p></div>
+        <div><h2 className="font-semibold">{displayName}</h2><p className="text-sm text-muted-foreground">{data.listing?.title ?? "RentBerry item"}</p></div>
       </div>
       <ol className="flex-1 space-y-3 overflow-y-auto py-5" aria-label="Conversation messages">
         {data.messages.length ? data.messages.map((message) => <li key={message.id} className={`max-w-[85%] border border-border px-3 py-2 text-sm ${message.sender_id === user?.id ? "ml-auto bg-brand-gold-soft" : "mr-auto bg-muted"}`}>

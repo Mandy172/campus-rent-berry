@@ -16,9 +16,9 @@ import { createListing } from "@/lib/marketplace.functions";
 
 export const Route = createFileRoute("/post-item")({
   head: () => ({ meta: [
-    { title: "List an item | BorrowBee" },
-    { name: "description", content: "Share an item with the ADYPU community on BorrowBee." },
-    { property: "og:title", content: "List an item | BorrowBee" },
+    { title: "List an item | RentBerry" },
+    { name: "description", content: "Share an item with the ADYPU community on RentBerry." },
+    { property: "og:title", content: "List an item | RentBerry" },
     { property: "og:description", content: "Make useful things available to the ADYPU community." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },

@@ -12,10 +12,10 @@ import { listMyRentals, respondToRental } from "@/lib/marketplace.functions";
 
 export const Route = createFileRoute("/my-rentals")({
   head: () => ({ meta: [
-    { title: "My rental requests | BorrowBee" },
-    { name: "description", content: "See your rental requests and manage borrowing plans on BorrowBee." },
-    { property: "og:title", content: "My rental requests | BorrowBee" },
-    { property: "og:description", content: "Track rental requests on BorrowBee." },
+    { title: "My rental requests | RentBerry" },
+    { name: "description", content: "See your rental requests and manage borrowing plans on RentBerry." },
+    { property: "og:title", content: "My rental requests | RentBerry" },
+    { property: "og:description", content: "Track rental requests on RentBerry." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },
   ] }),

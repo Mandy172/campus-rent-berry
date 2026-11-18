@@ -20,10 +20,10 @@ import { startConversation } from "@/lib/community.functions";
 export const Route = createFileRoute("/items/$id")({
   loader: ({ context, params }) => context.queryClient.ensureQueryData(listingQueryOptions(params.id)),
   head: ({ loaderData }) => ({ meta: [
-    { title: `${loaderData?.title ?? "Item"} | BorrowBee` },
-    { name: "description", content: loaderData?.description ?? "A campus rental from the BorrowBee marketplace." },
-    { property: "og:title", content: `${loaderData?.title ?? "Item"} | BorrowBee` },
-    { property: "og:description", content: loaderData?.description ?? "A campus rental from the BorrowBee marketplace." },
+    { title: `${loaderData?.title ?? "Item"} | RentBerry` },
+    { name: "description", content: loaderData?.description ?? "A campus rental from the RentBerry marketplace." },
+    { property: "og:title", content: `${loaderData?.title ?? "Item"} | RentBerry` },
+    { property: "og:description", content: loaderData?.description ?? "A campus rental from the RentBerry marketplace." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },
   ] }),

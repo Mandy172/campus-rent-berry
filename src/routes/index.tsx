@@ -10,9 +10,9 @@ export const Route = createFileRoute("/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(listingsQueryOptions()),
   head: () => ({
     meta: [
-      { title: "BorrowBee | Campus rentals at ADYPU" },
+      { title: "RentBerry | Campus rentals at ADYPU" },
       { name: "description", content: "Borrow what you need and earn from what you own. Discover campus rentals from the ADYPU community." },
-      { property: "og:title", content: "BorrowBee | Campus rentals at ADYPU" },
+      { property: "og:title", content: "RentBerry | Campus rentals at ADYPU" },
       { property: "og:description", content: "Borrow what you need and earn from what you own at ADYPU." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

@@ -3,7 +3,7 @@ import { estimateEarnings, PLATFORM_FEE_RATE } from "@/lib/borrowbee";
 import { daysBetween, rentalQuote } from "@/lib/pricing";
 import type { Listing } from "@/lib/borrowbee";
 
-describe("BorrowBee pricing", () => {
+describe("RentBerry pricing", () => {
   it("keeps the platform fee at 12.5%", () => {
     expect(PLATFORM_FEE_RATE).toBe(0.125);
   });

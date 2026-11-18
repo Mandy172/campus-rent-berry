@@ -34,7 +34,7 @@ export function BorrowBeeLayout({ children }: { children: React.ReactNode }) {
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
         <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 md:min-h-[4.5rem] md:px-8">
-          <Link to="/" aria-label="BorrowBee home" className="flex shrink-0 items-center gap-2.5">
+          <Link to="/" aria-label="RentBerry home" className="flex shrink-0 items-center gap-2.5">
             <img src="/logo-mark.png" alt="" className="h-8 w-auto object-contain" />
             <span className="font-heading text-xl font-semibold">{BRAND.name}</span>
           </Link>
@@ -66,7 +66,7 @@ export function BorrowBeeLayout({ children }: { children: React.ReactNode }) {
         <div className="mx-auto grid max-w-7xl gap-9 px-5 py-11 md:grid-cols-[1fr_auto_auto] md:items-start md:px-8">
           <div><Link to="/" className="flex w-fit items-center gap-2"><img src="/logo-mark.png" alt="" className="h-7 w-auto brightness-0 invert"/><span className="font-heading text-xl font-semibold">{BRAND.name}</span></Link><p className="mt-3 max-w-md text-sm leading-6 text-secondary-foreground/70">Borrow from classmates and make more use of what you own. For the {BRAND.community} community.</p></div>
           <nav aria-label="Marketplace links" className="grid content-start gap-2 text-sm"><span className="mb-1 font-semibold text-primary">Marketplace</span><Link to="/browse" className="text-secondary-foreground/75 hover:text-primary">Browse items</Link><Link to="/post-item" className="text-secondary-foreground/75 hover:text-primary">List an item</Link><Link to="/my-rentals" className="text-secondary-foreground/75 hover:text-primary">My rentals</Link></nav>
-          <nav aria-label="About BorrowBee" className="grid content-start gap-2 text-sm"><span className="mb-1 font-semibold text-primary">{BRAND.name}</span><Link to="/blog" className="text-secondary-foreground/75 hover:text-primary">Journal</Link><Link to="/earnings" className="text-secondary-foreground/75 hover:text-primary">Earnings estimator</Link><a href={`mailto:${BRAND.supportEmail}`} className="text-secondary-foreground/75 hover:text-primary">Contact</a></nav>
+          <nav aria-label="About RentBerry" className="grid content-start gap-2 text-sm"><span className="mb-1 font-semibold text-primary">{BRAND.name}</span><Link to="/blog" className="text-secondary-foreground/75 hover:text-primary">Journal</Link><Link to="/earnings" className="text-secondary-foreground/75 hover:text-primary">Earnings estimator</Link><a href={`mailto:${BRAND.supportEmail}`} className="text-secondary-foreground/75 hover:text-primary">Contact</a></nav>
         </div>
         <div className="border-t border-secondary-foreground/15 px-5 py-5 text-center text-xs text-secondary-foreground/60">© {new Date().getFullYear()} {BRAND.name} · {BRAND.communityShort} campus community</div>
       </footer>

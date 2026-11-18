@@ -13,9 +13,9 @@ import { listingsQueryOptions } from "@/lib/marketplace";
 export const Route = createFileRoute("/browse")({
   loader: ({ context }) => context.queryClient.ensureQueryData(listingsQueryOptions()),
   head: () => ({ meta: [
-    { title: "Browse campus rentals | BorrowBee" },
+    { title: "Browse campus rentals | RentBerry" },
     { name: "description", content: "Browse items shared by the ADYPU community, with clear prices and campus pickup locations." },
-    { property: "og:title", content: "Browse campus rentals | BorrowBee" },
+    { property: "og:title", content: "Browse campus rentals | RentBerry" },
     { property: "og:description", content: "Find useful items shared by the ADYPU community." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },

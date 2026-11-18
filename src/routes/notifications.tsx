@@ -11,10 +11,10 @@ import { listMyNotifications, markMyNotificationsRead } from "@/lib/community.fu
 
 export const Route = createFileRoute("/notifications")({
   head: () => ({ meta: [
-    { title: "Notifications | BorrowBee" },
-    { name: "description", content: "Updates about your BorrowBee rental requests and messages." },
-    { property: "og:title", content: "Notifications | BorrowBee" },
-    { property: "og:description", content: "Your BorrowBee account updates." },
+    { title: "Notifications | RentBerry" },
+    { name: "description", content: "Updates about your RentBerry rental requests and messages." },
+    { property: "og:title", content: "Notifications | RentBerry" },
+    { property: "og:description", content: "Your RentBerry account updates." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },
   ] }),

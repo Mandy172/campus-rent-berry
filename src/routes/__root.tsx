@@ -81,10 +81,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "BorrowBee" },
+      { title: "RentBerry" },
       { name: "description", content: "Borrow what you need. Earn from what you own." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "BorrowBee" },
+      { property: "og:title", content: "RentBerry" },
       { property: "og:description", content: "The campus rental marketplace for ADYPU." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

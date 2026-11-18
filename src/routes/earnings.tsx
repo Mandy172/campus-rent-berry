@@ -9,10 +9,10 @@ import { categories, estimateEarnings, formatMoney, PLATFORM_FEE_LABEL } from "@
 
 export const Route = createFileRoute("/earnings")({
   head: () => ({ meta: [
-    { title: "Earnings estimator | BorrowBee" },
-    { name: "description", content: "Estimate how much your items could earn on the BorrowBee ADYPU campus marketplace." },
-    { property: "og:title", content: "Earnings estimator | BorrowBee" },
-    { property: "og:description", content: "Estimate item rental earnings after the 12.5% BorrowBee service fee." },
+    { title: "Earnings estimator | RentBerry" },
+    { name: "description", content: "Estimate how much your items could earn on the RentBerry ADYPU campus marketplace." },
+    { property: "og:title", content: "Earnings estimator | RentBerry" },
+    { property: "og:description", content: "Estimate item rental earnings after the 12.5% RentBerry service fee." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },
   ] }),
@@ -42,7 +42,7 @@ function EarningsPage() {
             <p className="text-sm font-semibold uppercase text-brand-terracotta">Estimated monthly payout</p><p className="mt-3 font-heading text-5xl font-semibold sm:text-6xl">{formatMoney(Math.round(net))}</p>
             <div className="mt-7 divide-y divide-border border-y border-border">
               <p className="flex justify-between gap-4 py-4 text-sm"><span className="text-muted-foreground">{formatMoney(dailyPrice)} × {rentedDays} days</span><strong>{formatMoney(gross)}</strong></p>
-              <p className="flex justify-between gap-4 py-4 text-sm"><span className="flex items-center gap-2 text-muted-foreground"><CirclePercent size={16}/>{PLATFORM_FEE_LABEL} BorrowBee fee</span><span>− {formatMoney(Math.round(fee))}</span></p>
+              <p className="flex justify-between gap-4 py-4 text-sm"><span className="flex items-center gap-2 text-muted-foreground"><CirclePercent size={16}/>{PLATFORM_FEE_LABEL} RentBerry fee</span><span>− {formatMoney(Math.round(fee))}</span></p>
               <p className="flex justify-between gap-4 py-4 text-sm"><span className="flex items-center gap-2 font-medium"><HandCoins size={16}/> Estimated to you</span><strong>{formatMoney(Math.round(net))}</strong></p>
             </div>
             <Button asChild size="lg" className="mt-6 w-full"><Link to="/post-item">List an item <ArrowRight /></Link></Button>

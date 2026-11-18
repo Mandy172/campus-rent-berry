@@ -13,10 +13,10 @@ import { BRAND, safeReturnPath } from "@/lib/borrowbee";
 export const Route = createFileRoute("/sign-in")({
   validateSearch: (search: Record<string, unknown>) => ({ next: typeof search["next"] === "string" ? safeReturnPath(search["next"]) : "/browse" }),
   head: () => ({ meta: [
-    { title: "Sign in | BorrowBee" },
-    { name: "description", content: "Sign in to BorrowBee to make rental requests and share items with the ADYPU community." },
-    { property: "og:title", content: "Sign in | BorrowBee" },
-    { property: "og:description", content: "Access the BorrowBee campus rental marketplace." },
+    { title: "Sign in | RentBerry" },
+    { name: "description", content: "Sign in to RentBerry to make rental requests and share items with the ADYPU community." },
+    { property: "og:title", content: "Sign in | RentBerry" },
+    { property: "og:description", content: "Access the RentBerry campus rental marketplace." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary_large_image" },
   ] }),

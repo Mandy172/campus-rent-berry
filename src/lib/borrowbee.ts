@@ -1,7 +1,7 @@
 import { CATEGORIES } from "@/lib/borrowbee-config";
 
 export const BRAND = {
-  name: "BorrowBee",
+  name: "RentBerry",
   tagline: "Borrow what you need. Earn from what you own.",
   community: "Ajeenkya DY Patil University",
   communityShort: "ADYPU",
